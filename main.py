@@ -24,6 +24,7 @@ class Player:
         self.move()
 
 
+
 win = pygame.display.set_mode((500, 500))
 run = True
 player = Player(50, 0)

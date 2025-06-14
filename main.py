@@ -1,4 +1,5 @@
 import pygame
+pygame.init()
 class Platforms:
     def __init__(self, x, y, width=20, height=10, color=(0,255,0)):
         self.rect = pygame.Rect(x, y, width, height)
@@ -20,6 +21,10 @@ platforms_draw = []
 drawing = False
 erase = False
 paint = 700
+font = pygame.font.Font(None, 32)
+text = font.render(f"краска str(paint)",
+                   False,
+                   (255, 255, 255))
 
 while run:
     for eve in pygame.event.get():
@@ -37,8 +42,11 @@ while run:
                 erase = False
     mouse = pygame.mouse.get_pos() # (150, 125)
     if drawing and paint > 0:
-        platforms_draw.append(Platforms(mouse[0], mouse[1]))
-        paint -= 1
+        plat = Platforms(mouse[0], mouse[1])
+        screen = pygame.Rect(0,0, 500, 500)
+        if screen.colliderect(plat.rect):
+            platforms_draw.append(plat)
+            paint -= 1
 
     if erase:
         eraser = pygame.Rect(*mouse, 10, 10)
@@ -46,10 +54,15 @@ while run:
             if platform.rect.colliderect(eraser):
                 platforms_draw.remove(platform)
                 paint += 1
+    text = font.render(f"краска {str(paint)}",
+                       True,
+                       (255, 255, 255))
+
     win.fill((0, 0, 0))
     for platform in platforms:
         platform.update()
     for platform in platforms_draw:
         platform.update()
+    win.blit(text, (10, 10))
     pygame.display.update()
 pygame.quit()

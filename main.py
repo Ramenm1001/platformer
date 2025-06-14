@@ -9,16 +9,27 @@ class Platforms:
 
     def update(self):
         self.draw()
+class Player:
+    def __init__(self, x, y, width=15, height=40, color=(185, 122, 87)):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.color = color
 
+    def draw(self):
+        pygame.draw.rect(win, self.color, self.rect )
+    def move(self):
+        pass
+    def update(self):
+        self.draw()
+        self.move()
 
 win = pygame.display.set_mode((500, 500))
 run = True
-player = None
+player = Player(50, 0)
 platforms = [Platforms(50, 80, 150),
              Platforms(100, 100)]
 platforms_draw = []
 drawing = False
-paint = 700
+paint = 820
 
 while run:
     for eve in pygame.event.get():
@@ -41,5 +52,6 @@ while run:
         platform.update()
     for platform in platforms_draw:
         platform.update()
+    player.update()
     pygame.display.update()
 pygame.quit()

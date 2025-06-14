@@ -14,11 +14,35 @@ class Player:
     def __init__(self, x, y, width=15, height=40, color=(185, 122, 87)):
         self.rect = pygame.Rect(x, y, width, height)
         self.color = color
+        self.is_fall = False
+        self.speed_y = 0
 
     def draw(self):
         pygame.draw.rect(win, self.color, self.rect )
     def move(self):
-        pass
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_d]:
+            self.rect = self.rect.move(5, 0)
+        if keys[pygame.K_a]:
+            self.rect = self.rect.move(-5, 0)
+
+        moving = self.rect.move(0, 1)
+        all_platforms = platforms.copy()
+        if platforms_draw:
+            all_platforms.extend(platforms_draw)
+        for platform in all_platforms:
+            if platform.rect.colliderect(moving):
+                self.rect.bottom = platform.rect.top
+                return
+        self.is_fall = True
+        self.speed_y += 1
+        self.rect = self.rect.move(0, self.speed_y)
+        for platform in all_platforms:
+            if platform.rect.colliderect(moving):
+                self.rect.bottom = platform.rect.top
+                return
+
+
     def update(self):
         self.draw()
         self.move()
@@ -41,6 +65,7 @@ text = font.render(f"краска str(paint)",
 paint = 820
 
 while run:
+    pygame.time.delay(100)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             run = False

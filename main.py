@@ -46,7 +46,6 @@ while run:
             if platform.rect.colliderect(eraser):
                 platforms_draw.remove(platform)
                 paint += 1
-    print(paint)
     win.fill((0, 0, 0))
     for platform in platforms:
         platform.update()

@@ -18,7 +18,7 @@ platforms = [Platforms(50, 80, 150),
              Platforms(100, 100)]
 platforms_draw = []
 drawing = False
-paint = 100
+paint = 700
 
 while run:
     for eve in pygame.event.get():
@@ -26,13 +26,14 @@ while run:
             run = False
         if eve.type == pygame.MOUSEBUTTONDOWN:
             drawing = True
-        # if eve.type
+        if eve.type == pygame.MOUSEBUTTONUP:
+            drawing = False
     mouse = pygame.mouse.get_pos() # (150, 125)
     if drawing and paint > 0:
 
         # ??????
-        platforms_draw.append(?????)
-        # paint ???
+        platforms_draw.append(Platforms(mouse[0], mouse[1]))
+        paint -= 1
 
 
     win.fill((0, 0, 0))

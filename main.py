@@ -29,6 +29,7 @@ while run:
         # if eve.type
     mouse = pygame.mouse.get_pos() # (150, 125)
     if drawing and paint > 0:
+
         # ??????
         platforms_draw.append(?????)
         # paint ???

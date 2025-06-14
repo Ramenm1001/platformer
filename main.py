@@ -18,6 +18,7 @@ platforms = [Platforms(50, 80, 150),
              Platforms(100, 100)]
 platforms_draw = []
 drawing = False
+erase = False
 paint = 700
 
 while run:
@@ -25,17 +26,27 @@ while run:
         if eve.type == pygame.QUIT:
             run = False
         if eve.type == pygame.MOUSEBUTTONDOWN:
-            drawing = True
+            if eve.button == 1:
+                drawing = True
+            if eve.button == 3:
+                erase = True
         if eve.type == pygame.MOUSEBUTTONUP:
-            drawing = False
+            if eve.button == 1:
+                drawing = False
+            if eve.button == 3:
+                erase = False
     mouse = pygame.mouse.get_pos() # (150, 125)
     if drawing and paint > 0:
-
-        # ??????
         platforms_draw.append(Platforms(mouse[0], mouse[1]))
         paint -= 1
 
-
+    if erase:
+        eraser = pygame.Rect(*mouse, 10, 10)
+        for platform in platforms_draw:
+            if platform.rect.colliderect(eraser):
+                platforms_draw.remove(platform)
+                paint += 1
+    print(paint)
     win.fill((0, 0, 0))
     for platform in platforms:
         platform.update()

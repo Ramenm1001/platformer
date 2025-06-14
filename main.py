@@ -15,9 +15,10 @@ win = pygame.display.set_mode((500, 500))
 run = True
 player = None
 platforms = [Platforms(50, 80, 150),
-             Platforms(100,100)]
+             Platforms(100, 100)]
 platforms_draw = []
 drawing = False
+paint = 100
 
 while run:
     for eve in pygame.event.get():

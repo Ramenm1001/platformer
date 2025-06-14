@@ -43,7 +43,7 @@ while run:
     mouse = pygame.mouse.get_pos() # (150, 125)
     if drawing and paint > 0:
         plat = Platforms(mouse[0], mouse[1])
-        screen = pygame.Rect(0,0, 500, 500)
+        screen = pygame.Rect(0, 0, 500, 500)
         if screen.colliderect(plat.rect):
             platforms_draw.append(plat)
             paint -= 1

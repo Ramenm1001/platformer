@@ -1,4 +1,5 @@
 import pygame
+import math
 pygame.init()
 class Platforms:
     def __init__(self, x, y, width=20, height=10, color=(0,255,0)):
@@ -49,7 +50,24 @@ class Player:
         self.draw()
 
 
+class Bullet:
+    def __init__(self, x, y, x1, y1):
+        self.rect = pygame.Rect(x, y, 1, 1)
 
+
+def get_angle(x, y, x1, y1):
+        try:
+            dy = abs(y - y1)
+            dx = abs(x - x1)
+            gip = (dx ** 2 + dy ** 2) ** 0.5
+            angle = math.atan(dy / dx) * 57.3
+            if x1 < x:
+                angle = 180 - angle
+            if y1 > y:
+                angle = 360 - angle
+            return angle
+        except ZeroDivisionError:
+            return angle
 
 win = pygame.display.set_mode((500, 500))
 run = True
@@ -64,9 +82,13 @@ font = pygame.font.Font(None, 32)
 text = font.render(f"краска str(paint)",
                    False,
                    (255, 255, 255))
+
 paint = 820
 
+
 while run:
+    mouse = pygame.mouse.get_pos()
+    b = Bullet(player.rect.x, player.rect.y, *mouse)
     pygame.time.delay(30)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:

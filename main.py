@@ -49,13 +49,38 @@ class Player:
         self.draw()
 
 
+class Enemy:
+    def __init__(self, x, y, first_dot, second_dot, width=20, height=20, color=(254, 0, 0)):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.color = color
+        self.fir_dot = first_dot
+        self.second_dot = second_dot
+        self.x_speed = 1
+        self.y_speed = 0
 
+    def draw(self):
+        pygame.draw.rect(win, self.color, self.rect )
+    def move(self):
+
+        if abs(self.second_dot[0] - self.rect.x) >= 0:
+            self.rect = self.rect.move(self.x_speed, self.y_speed)
+        else:
+            self.x_speed *= -1
+            self.second_dot, self.fir_dot = self.fir_dot, self.second_dot
+            # b = a
+            # a = b
+            #a, b = b, a
+    def update(self):
+        self.draw()
+        self.move()
 
 win = pygame.display.set_mode((500, 500))
 run = True
 player = Player(50, 0)
 platforms = [Platforms(50, 80, 150),
              Platforms(100, 100)]
+enemy = Enemy(80, 40, (50, 20), (450, 20))
+
 platforms_draw = []
 drawing = False
 erase = False
@@ -105,6 +130,7 @@ while run:
     for platform in platforms_draw:
         platform.update()
     player.update()
+    enemy.update()
     win.blit(text, (10, 10))
     pygame.display.update()
 pygame.quit()

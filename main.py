@@ -1,4 +1,5 @@
 import pygame
+import math
 pygame.init()
 class Platforms:
     def __init__(self, x, y, width=20, height=10, color=(0,255,0)):
@@ -49,6 +50,9 @@ class Player:
         self.draw()
 
 
+class Bullet:
+    def __init__(self, x, y, x1, y1):
+        self.rect = pygame.Rect(x, y, 1, 1)
 class Enemy:
     def __init__(self, x, y, first_dot, second_dot, width=20, height=20, color=(254, 0, 0)):
         self.rect = pygame.Rect(x, y, width, height)
@@ -57,7 +61,6 @@ class Enemy:
         self.second_dot = second_dot
         self.x_speed = 1
         self.y_speed = 0
-
     def draw(self):
         pygame.draw.rect(win, self.color, self.rect )
     def move(self):
@@ -74,6 +77,22 @@ class Enemy:
         self.draw()
         self.move()
 
+
+def get_angle(x, y, x1, y1):
+        try:
+            dy = abs(y - y1)
+            dx = abs(x - x1)
+            gip = (dx ** 2 + dy ** 2) ** 0.5
+            angle = math.atan(dy / dx) * 57.3
+            if x1 < x:
+                angle = 180 - angle
+            if y1 > y:
+                angle = 360 - angle
+            return angle
+        except ZeroDivisionError:
+            return angle
+
+
 win = pygame.display.set_mode((500, 500))
 run = True
 player = Player(50, 0)
@@ -89,10 +108,13 @@ font = pygame.font.Font(None, 32)
 text = font.render(f"краска str(paint)",
                    False,
                    (255, 255, 255))
+
 paint = 820
 
+
 while run:
-    pygame.time.delay(30)
+    mouse = pygame.mouse.get_pos()
+     pygame.time.delay(30)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             run = False

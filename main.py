@@ -61,8 +61,10 @@ class Enemy:
         self.second_dot = second_dot
         self.x_speed = 1
         self.y_speed = 0
+
     def draw(self):
-        pygame.draw.rect(win, self.color, self.rect )
+        pygame.draw.rect(win, self.color, self.rect)
+
     def move(self):
 
         if abs(self.second_dot[0] - self.rect.x) >= 0:
@@ -72,7 +74,8 @@ class Enemy:
             self.second_dot, self.fir_dot = self.fir_dot, self.second_dot
             # b = a
             # a = b
-            #a, b = b, a
+            # a, b = b, a
+
     def update(self):
         self.draw()
         self.move()

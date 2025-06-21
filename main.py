@@ -67,7 +67,7 @@ class Enemy:
 
     def move(self):
 
-        if abs(self.second_dot[0] - self.rect.x) >= 0:
+        if abs(self.second_dot[0] - self.rect.x) >= abs(self.second_dot[0] - self.rect.move(self.x_speed, 0).x):
             self.rect = self.rect.move(self.x_speed, self.y_speed)
         else:
             self.x_speed *= -1
@@ -101,7 +101,7 @@ run = True
 player = Player(50, 0)
 platforms = [Platforms(50, 80, 150),
              Platforms(100, 100)]
-enemy = Enemy(80, 40, (50, 20), (450, 20))
+enemy = Enemy(80, 40, (50, 40), (450, 40))
 
 platforms_draw = []
 drawing = False
@@ -117,7 +117,7 @@ paint = 820
 
 while run:
     mouse = pygame.mouse.get_pos()
-     pygame.time.delay(30)
+    pygame.time.delay(30)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             run = False

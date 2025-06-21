@@ -35,7 +35,8 @@ class Player:
                 self.rect.bottom = platform.rect.top
                 return
         self.is_fall = True
-        self.speed_y += 1
+        if self.speed_y < 5:
+            self.speed_y += 1
         self.rect = self.rect.move(0, self.speed_y)
         for platform in all_platforms:
             if platform.rect.colliderect(moving):
@@ -44,8 +45,9 @@ class Player:
 
 
     def update(self):
-        self.draw()
         self.move()
+        self.draw()
+
 
 
 
@@ -65,7 +67,7 @@ text = font.render(f"краска str(paint)",
 paint = 820
 
 while run:
-    pygame.time.delay(100)
+    pygame.time.delay(30)
     for eve in pygame.event.get():
         if eve.type == pygame.QUIT:
             run = False
